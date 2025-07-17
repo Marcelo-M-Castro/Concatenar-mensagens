@@ -40,6 +40,7 @@ O arquivo deve conter pelo menos as seguintes colunas:
 
 ---
 
+
 ## 🛠️ Tecnologias utilizadas
 
 - Python
@@ -51,4 +52,4 @@ O arquivo deve conter pelo menos as seguintes colunas:
 
 ---
 
-
+[concatenar_msg.pdf](https://github.com/user-attachments/files/21302759/concatenar_msg.pdf)
