@@ -12,8 +12,6 @@ uploaded_file = st.file_uploader("📁 Faça upload do arquivo CSV", type="csv")
 
 if uploaded_file:
     df = pd.read_csv(uploaded_file)
-    st.subheader("Prévia dos dados")
-    st.dataframe(df.head())
 
     # Ordena e concatena mensagens
     df_sorted = df.sort_values(by=['conversation_sid', 'indice_message'])
@@ -50,38 +48,7 @@ if uploaded_file:
     # Remover duplicadas
     df_final = df_final.drop_duplicates(subset=['conversation_concatenada'])
 
-    st.subheader("📋 Dados processados")
-    st.dataframe(df_final[['conversation_sid', 'conversation_concatenada', 'cliente', 'nota', 'produto']].head())
-
-    # Filtrar para análise gráfica
-    df_filtered = df_final[
-        df_final['nota'].isin(['1', '2', '3', '4', '5']) & 
-        (df_final['produto'] == 'Consignado INSS')
-    ].copy()
-
-    df_filtered['nota_numeric'] = pd.to_numeric(df_filtered['nota'])
-    note_counts = df_filtered['nota_numeric'].value_counts().sort_index()
-
-    st.subheader("📊 Distribuição de Notas para Consignado INSS")
-    fig, ax = plt.subplots(figsize=(8, 5))
-    sns.barplot(x=note_counts.index, y=note_counts.values, palette='viridis', ax=ax)
-    ax.set_xlabel('Nota')
-    ax.set_ylabel('Número de Ocorrências')
-    ax.set_title('Distribuição de Notas (1 a 5)')
-    for p in ax.patches:
-        ax.annotate(f'{p.get_height()}', (p.get_x() + p.get_width() / 2., p.get_height()), 
-                    ha='center', va='center', xytext=(0, 5), textcoords='offset points')
-    st.pyplot(fig)
-
-    # Mostrar tabela com totais
-    st.subheader("📈 Tabela de Notas")
-    contagem = note_counts.reset_index()
-    contagem.columns = ['Nota', 'Contagem']
-    total = pd.DataFrame([['Total', contagem['Contagem'].sum()]], columns=['Nota', 'Contagem'])
-    tabela = pd.concat([contagem, total], ignore_index=True)
-    st.dataframe(tabela)
-
-    # Exportação
+    # Exportação final
     st.subheader("💾 Exportar Resultado")
     output = BytesIO()
     df_final.to_excel(output, index=False, engine='openpyxl')
