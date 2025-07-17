@@ -48,12 +48,11 @@ if uploaded_file:
     # Remover duplicadas
     df_final = df_final.drop_duplicates(subset=['conversation_concatenada'])
 
-    # Exibir prévia dos resultados finais
+    # Exibir prévia com as colunas solicitadas
     st.subheader("📄 Prévia dos resultados processados")
-    st.dataframe(
-        df_final[['conversation_sid', 'conversation_concatenada', 'cliente', 'nota', 'produto']].head(10),
-        use_container_width=True
-    )
+    colunas_preview = ['partition_date', 'conversation_sid', 'conversation_concatenada']
+    colunas_presentes = [col for col in colunas_preview if col in df_final.columns]
+    st.dataframe(df_final[colunas_presentes].head(10), use_container_width=True)
 
     # Exportação final
     st.subheader("💾 Exportar Resultado")
