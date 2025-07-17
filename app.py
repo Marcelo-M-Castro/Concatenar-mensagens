@@ -6,7 +6,7 @@ import re
 from io import BytesIO
 
 st.set_page_config(page_title="Concatenador de Conversas", layout="wide")
-st.title("🧩 Concatenador de Conversas com Análise de Feedback")
+st.title("🧩 Concatenador de Conversas")
 
 uploaded_file = st.file_uploader("📁 Faça upload do arquivo CSV", type="csv")
 
