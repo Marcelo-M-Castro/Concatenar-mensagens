@@ -48,6 +48,13 @@ if uploaded_file:
     # Remover duplicadas
     df_final = df_final.drop_duplicates(subset=['conversation_concatenada'])
 
+    # Exibir prévia dos resultados finais
+    st.subheader("📄 Prévia dos resultados processados")
+    st.dataframe(
+        df_final[['conversation_sid', 'conversation_concatenada', 'cliente', 'nota', 'produto']].head(10),
+        use_container_width=True
+    )
+
     # Exportação final
     st.subheader("💾 Exportar Resultado")
     output = BytesIO()
